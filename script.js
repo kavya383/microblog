@@ -51,6 +51,7 @@ function followUser() {
     }
     
     displayFeed();
+    displayFollowers(); // Update followers list
     document.getElementById('followUser').value = ''; // Clear the input field
 }
 
@@ -93,11 +94,8 @@ function displayFollowers() {
     }
 }
 
-// Call this function when the page loads or user interaction requires it
-function updateUI() {
+// Initial display of feed and followers
+window.onload = function() {
     displayFeed();
     displayFollowers();
-}
-
-// Call updateUI() after posting content or following a user
-document.querySelector('button').addEventListener('click', updateUI);
+};
