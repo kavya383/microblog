@@ -45,18 +45,9 @@ button:hover {
     background-color: #0056b3;
 }
 
-.follow-section, .post-section, .feed-section {
+.follow-section, .post-section, .feed-section, .followers-section {
     margin-bottom: 20px;
 }
-.followers-section {
-    margin-top: 20px;
-}
-
-.follower {
-    border-bottom: 1px solid #eee;
-    padding: 5px 0;
-}
-
 
 #feed {
     border-top: 1px solid #ccc;
@@ -66,4 +57,13 @@ button:hover {
 .feed-post {
     border-bottom: 1px solid #eee;
     padding: 10px 0;
+}
+
+.followers-section {
+    margin-top: 20px;
+}
+
+.follower {
+    border-bottom: 1px solid #eee;
+    padding: 5px 0;
 }
