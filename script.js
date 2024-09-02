@@ -25,8 +25,8 @@ function postContent() {
 
 // Function to follow a user
 function followUser() {
-    const userToFollow = document.getElementById('followUser').value;
-    if (userToFollow.trim() === '' || userToFollow === currentUser) {
+    const userToFollow = document.getElementById('followUser').value.trim();
+    if (userToFollow === '' || userToFollow === currentUser) {
         alert('Invalid user to follow!');
         return;
     }
