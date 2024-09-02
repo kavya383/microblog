@@ -48,6 +48,15 @@ button:hover {
 .follow-section, .post-section, .feed-section {
     margin-bottom: 20px;
 }
+.followers-section {
+    margin-top: 20px;
+}
+
+.follower {
+    border-bottom: 1px solid #eee;
+    padding: 5px 0;
+}
+
 
 #feed {
     border-top: 1px solid #ccc;
