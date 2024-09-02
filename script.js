@@ -19,7 +19,8 @@ function postContent() {
     
     // Add the new post
     users[currentUser].posts.push(content);
-    displayFeed();
+    displayYourPosts();
+    displayFollowersPosts();
     document.getElementById('postContent').value = ''; // Clear the textarea
 }
 
@@ -50,18 +51,38 @@ function followUser() {
         users[userToFollow].followers.push(currentUser);
     }
     
-    displayFeed();
+    displayYourPosts();
+    displayFollowersPosts();
     displayFollowers(); // Update followers list
     document.getElementById('followUser').value = ''; // Clear the input field
 }
 
-// Function to display the feed
-function displayFeed() {
-    const feedElement = document.getElementById('feed');
-    feedElement.innerHTML = ''; // Clear previous feed
+// Function to display your own posts
+function displayYourPosts() {
+    const yourPostsElement = document.getElementById('yourPosts');
+    yourPostsElement.innerHTML = ''; // Clear previous posts
     
-    // Get posts from the current user and their followers
-    const usersToDisplay = [currentUser].concat(users[currentUser].following);
+    if (users[currentUser] && users[currentUser].posts.length > 0) {
+        users[currentUser].posts.forEach(post => {
+            const postElement = document.createElement('div');
+            postElement.className = 'feed-post';
+            postElement.textContent = `${currentUser}: ${post}`;
+            yourPostsElement.appendChild(postElement);
+        });
+    } else {
+        const noPostsElement = document.createElement('div');
+        noPostsElement.textContent = 'No posts yet';
+        yourPostsElement.appendChild(noPostsElement);
+    }
+}
+
+// Function to display posts from followers
+function displayFollowersPosts() {
+    const followersPostsElement = document.getElementById('followersPosts');
+    followersPostsElement.innerHTML = ''; // Clear previous posts
+    
+    // Get posts from the current user's followers
+    const usersToDisplay = users[currentUser]?.following || [];
     
     usersToDisplay.forEach(user => {
         if (users[user]) {
@@ -69,7 +90,7 @@ function displayFeed() {
                 const postElement = document.createElement('div');
                 postElement.className = 'feed-post';
                 postElement.textContent = `${user}: ${post}`;
-                feedElement.appendChild(postElement);
+                followersPostsElement.appendChild(postElement);
             });
         }
     });
@@ -94,8 +115,9 @@ function displayFollowers() {
     }
 }
 
-// Initial display of feed and followers
+// Initial display of your posts and followers posts
 window.onload = function() {
-    displayFeed();
+    displayYourPosts();
+    displayFollowersPosts();
     displayFollowers();
 };
