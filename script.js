@@ -12,10 +12,12 @@ function postContent() {
         return;
     }
     
+    // Initialize user data if not already present
     if (!users[currentUser]) {
         users[currentUser] = { posts: [], following: [] };
     }
     
+    // Add the new post
     users[currentUser].posts.push(content);
     displayFeed();
     document.getElementById('postContent').value = ''; // Clear the textarea
@@ -29,6 +31,7 @@ function followUser() {
         return;
     }
     
+    // Initialize user data if not already present
     if (!users[currentUser]) {
         users[currentUser] = { posts: [], following: [] };
     }
@@ -37,6 +40,7 @@ function followUser() {
         users[userToFollow] = { posts: [], following: [] };
     }
     
+    // Add the user to the current user's following list if not already following
     if (!users[currentUser].following.includes(userToFollow)) {
         users[currentUser].following.push(userToFollow);
     }
@@ -50,6 +54,7 @@ function displayFeed() {
     const feedElement = document.getElementById('feed');
     feedElement.innerHTML = ''; // Clear previous feed
     
+    // Get posts from the current user and their followers
     const usersToDisplay = [currentUser].concat(users[currentUser].following);
     
     usersToDisplay.forEach(user => {
