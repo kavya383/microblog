@@ -14,7 +14,7 @@ function postContent() {
     
     // Initialize user data if not already present
     if (!users[currentUser]) {
-        users[currentUser] = { posts: [], following: [] };
+        users[currentUser] = { posts: [], following: [], followers: [] };
     }
     
     // Add the new post
@@ -33,16 +33,21 @@ function followUser() {
     
     // Initialize user data if not already present
     if (!users[currentUser]) {
-        users[currentUser] = { posts: [], following: [] };
+        users[currentUser] = { posts: [], following: [], followers: [] };
     }
     
     if (!users[userToFollow]) {
-        users[userToFollow] = { posts: [], following: [] };
+        users[userToFollow] = { posts: [], following: [], followers: [] };
     }
     
     // Add the user to the current user's following list if not already following
     if (!users[currentUser].following.includes(userToFollow)) {
         users[currentUser].following.push(userToFollow);
+    }
+    
+    // Add the current user to the followed user's followers list
+    if (!users[userToFollow].followers.includes(currentUser)) {
+        users[userToFollow].followers.push(currentUser);
     }
     
     displayFeed();
@@ -68,3 +73,31 @@ function displayFeed() {
         }
     });
 }
+
+// Function to display followers
+function displayFollowers() {
+    const followersElement = document.getElementById('followers');
+    followersElement.innerHTML = ''; // Clear previous followers list
+    
+    if (users[currentUser] && users[currentUser].followers.length > 0) {
+        users[currentUser].followers.forEach(follower => {
+            const followerElement = document.createElement('div');
+            followerElement.className = 'follower';
+            followerElement.textContent = follower;
+            followersElement.appendChild(followerElement);
+        });
+    } else {
+        const noFollowersElement = document.createElement('div');
+        noFollowersElement.textContent = 'No followers';
+        followersElement.appendChild(noFollowersElement);
+    }
+}
+
+// Call this function when the page loads or user interaction requires it
+function updateUI() {
+    displayFeed();
+    displayFollowers();
+}
+
+// Call updateUI() after posting content or following a user
+document.querySelector('button').addEventListener('click', updateUI);
