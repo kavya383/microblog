@@ -1,266 +1,274 @@
-let currentUser = localStorage.getItem("username");
-let users = JSON.parse(localStorage.getItem("users")) || [];
+// Sample user data
+let users = [];
+let currentUser = null;
 
-// Display welcome message with username
-document.addEventListener("DOMContentLoaded", () => {
-  if (!currentUser) {
-    alert("No user found. Redirecting to registration...");
-    window.location.href = "index.html";
+// Sample existing users with posts
+const existingUsers = [
+  {
+    username: "Harini",
+    followers: [],
+    following: [],
+    posts: [
+      {
+        content: "Hello!",
+        timestamp: "2024-10-01 10:00 AM",
+        likes: 3,
+        comments: [],
+      },
+      {
+        content: "Nice Weather!",
+        timestamp: "2024-10-02 11:30 AM",
+        likes: 2,
+        comments: [],
+      },
+    ],
+  },
+  {
+    username: "Abi",
+    followers: [],
+    following: [],
+    posts: [
+      {
+        content: "Hey there, I'm Abi!",
+        timestamp: "2024-10-03 12:15 PM",
+        likes: 1,
+        comments: [],
+      },
+      {
+        content: "I'm learning Full-Stack!",
+        timestamp: "2024-10-04 02:20 PM",
+        likes: 2,
+        comments: [],
+      },
+    ],
+  },
+];
+
+// Register new user
+document.getElementById("registerBtn").addEventListener("click", function () {
+  const username = document.getElementById("username").value.trim();
+  if (username) {
+    // Store previous posts before creating a new user
+    const storedPosts = JSON.parse(localStorage.getItem(username)) || [];
+
+    currentUser = {
+      username: username,
+      followers: [],
+      following: [],
+      posts: storedPosts, // Load previous posts
+    };
+
+    users.push(currentUser);
+    localStorage.setItem("users", JSON.stringify(users));
+    assignFollowers(); // Assign existing followers to the current user
+    showAppSection();
   } else {
-    document.getElementById(
-      "welcomeMessage"
-    ).innerText = `Hello, ${currentUser}!`;
-
-    // Check if user already exists in the users array
-    let user = users.find((user) => user.username === currentUser);
-    if (!user) {
-      users.push({
-        username: currentUser,
-        posts: [],
-        followers: [],
-        following: [],
-      });
-      localStorage.setItem("users", JSON.stringify(users));
-    }
-
-    displayUsers();
-    displayFeed();
-    updateProfileInfo();
-    displayFollowersPosts();
+    alert("Please enter a username.");
   }
-
-  // Logout button functionality
-  document.getElementById("logoutBtn").addEventListener("click", () => {
-    localStorage.removeItem("username");
-    alert("You have been logged out.");
-    window.location.href = "index.html"; // Redirect to the login page
-  });
-
-  // Add Another Account button functionality
-  document.getElementById("addAccountBtn").addEventListener("click", () => {
-    localStorage.removeItem("username"); // Clear the current session
-    window.location.href = "index.html"; // Redirect to the login page for a new account
-  });
 });
 
-// Create a new post
-document.getElementById("postBtn").addEventListener("click", () => {
-  const content = document.getElementById("postContent").value;
-  const file = document.getElementById("fileUpload").files[0];
+// Assign existing users as followers
+function assignFollowers() {
+  existingUsers.forEach((user) => {
+    if (currentUser.username !== user.username) {
+      user.followers.push(currentUser); // Add current user to each existing user's followers
+    }
+  });
+}
 
-  if (!content && !file) {
-    alert("Please add content or an image.");
+// Show the main app after registration
+function showAppSection() {
+  document.getElementById("registrationPage").style.display = "none";
+  document.getElementById("appSection").style.display = "block";
+  document.getElementById(
+    "welcomeMessage"
+  ).innerText = `Welcome, ${currentUser.username}!`;
+  updateProfileInfo();
+  displayFeed();
+  showUsersToFollow(); // Show existing users to follow
+}
+
+// Update profile info like followers and following
+function updateProfileInfo() {
+  document.getElementById(
+    "followersCount"
+  ).innerText = `Followers: ${currentUser.followers.length}`;
+  document.getElementById(
+    "followingCount"
+  ).innerText = `Following: ${currentUser.following.length}`;
+}
+
+// Create a new post
+document.getElementById("postBtn").addEventListener("click", function () {
+  const postContent = document.getElementById("postContent").value;
+  const fileInput = document.getElementById("fileUpload");
+  const file = fileInput.files[0];
+
+  if (!postContent && !file) {
+    alert("Please enter text or upload a file.");
     return;
   }
 
-  const user = users.find((user) => user.username === currentUser);
-
   const post = {
-    content: content,
-    file: file ? URL.createObjectURL(file) : null,
+    content: postContent,
+    imageUrl: file ? URL.createObjectURL(file) : null,
+    timestamp: new Date().toLocaleString(),
     likes: 0,
-    comments: [],
-    timestamp: new Date().toLocaleString(), // Add timestamp here
+    comments: [], // Comments will be an array of objects
   };
 
-  user.posts.push(post);
-  localStorage.setItem("users", JSON.stringify(users));
-
-  document.getElementById("postContent").value = "";
-  document.getElementById("fileUpload").value = "";
-
+  currentUser.posts.push(post);
+  localStorage.setItem(currentUser.username, JSON.stringify(currentUser.posts)); // Save posts to localStorage
   displayFeed();
+  resetPostForm();
 });
 
-// Display posts in the feed
-function displayFeed() {
-  const user = users.find((user) => user.username === currentUser);
-  let feedHtml = "";
+// Reset post form after submission
+function resetPostForm() {
+  document.getElementById("postContent").value = "";
+  document.getElementById("fileUpload").value = "";
+}
 
-  user.posts.forEach((post, index) => {
-    feedHtml += `
-            <div class="post">
-                <p>${post.content}</p>
-                <p class="timestamp">${
-                  post.timestamp
-                }</p> <!-- Show timestamp for own posts -->
-                ${
-                  post.file
-                    ? `<img src="${post.file}" class="zoomable" onclick="zoomImage(this)">`
-                    : ""
-                }
-                <div class="actions">
-                    <button onclick="likePost('${
-                      user.username
-                    }', ${index})">Like (${post.likes})</button>
-                    <button onclick="commentPost('${
-                      user.username
-                    }', ${index})">Comment</button>
-                    <button onclick="deletePost('${
-                      user.username
-                    }', ${index})">Delete</button>
-                </div>
-                <div class="comments">
-                    ${post.comments
-                      .map((comment) => `<p class="comment">${comment}</p>`)
-                      .join("")}
-                </div>
-            </div>
-        `;
+// Display the current user's posts in the feed
+function displayFeed() {
+  const feed = document.getElementById("feed");
+  const followersPosts = document.getElementById("followersPosts");
+
+  // Clear the feed and followers' posts sections
+  feed.innerHTML = "";
+  followersPosts.innerHTML = "";
+
+  // Display current user's posts
+  currentUser.posts.forEach((post) => {
+    const postElement = createPostElement(post, true); // User's post
+    feed.appendChild(postElement);
   });
 
-  document.getElementById("feed").innerHTML = feedHtml;
+  // Display followed users' posts
+  currentUser.following.forEach((follower) => {
+    follower.posts.forEach((post) => {
+      const postElement = createPostElement(post, false, follower.username); // Followers' post
+      followersPosts.appendChild(postElement);
+    });
+  });
+}
+
+// Create post element for feed
+function createPostElement(post, isUserPost, username = currentUser.username) {
+  const postElement = document.createElement("div");
+  postElement.classList.add("post");
+
+  const postContent = document.createElement("p");
+  postContent.innerText = `${username}: ${post.content}`; // Include username with content
+
+  const postImage = document.createElement("img");
+  if (post.imageUrl) {
+    postImage.src = post.imageUrl;
+    postImage.classList.add("zoomable");
+  }
+
+  const postTimestamp = document.createElement("p");
+  postTimestamp.innerText = `Posted on: ${post.timestamp}`;
+
+  postElement.appendChild(postContent);
+  if (post.imageUrl) postElement.appendChild(postImage);
+  postElement.appendChild(postTimestamp);
+
+  // Like button
+  const likeBtn = document.createElement("button");
+  likeBtn.innerText = `Like (${post.likes})`;
+  likeBtn.classList.add("like-btn");
+  likeBtn.addEventListener("click", () => {
+    post.likes++;
+    localStorage.setItem(
+      currentUser.username,
+      JSON.stringify(currentUser.posts)
+    ); // Update localStorage
+    displayFeed(); // Update feed to show new like count
+  });
+  postElement.appendChild(likeBtn);
+
+  // Comment button
+  const commentBtn = document.createElement("button");
+  commentBtn.innerText = "Comment";
+  commentBtn.classList.add("comment-btn");
+  commentBtn.addEventListener("click", () => {
+    const commentContent = prompt("Enter your comment:");
+    if (commentContent) {
+      post.comments.push({
+        username: currentUser.username,
+        text: commentContent,
+      }); // Store comment with username
+      localStorage.setItem(
+        currentUser.username,
+        JSON.stringify(currentUser.posts)
+      ); // Update localStorage
+      displayFeed(); // Update feed to show new comments
+    }
+  });
+  postElement.appendChild(commentBtn);
+
+  // Comments display
+  const commentsContainer = document.createElement("div");
+  commentsContainer.classList.add("comments-container");
+  const commentsCount = document.createElement("p");
+  commentsCount.innerText = `Comments (${post.comments.length})`;
+  commentsContainer.appendChild(commentsCount);
+
+  post.comments.forEach((comment) => {
+    const commentElement = document.createElement("p");
+    commentElement.innerText = `${comment.username}: ${comment.text}`; // Include username with comment
+    commentsContainer.appendChild(commentElement);
+  });
+
+  postElement.appendChild(commentsContainer);
+
+  // Add delete button only for user's posts
+  if (isUserPost) {
+    const deleteBtn = document.createElement("button");
+    deleteBtn.innerText = "Delete";
+    deleteBtn.classList.add("delete-btn");
+    deleteBtn.addEventListener("click", () => {
+      deletePost(post);
+    });
+    postElement.appendChild(deleteBtn);
+  }
+
+  return postElement;
 }
 
 // Delete a post
-function deletePost(username, postIndex) {
-  const user = users.find((user) => user.username === username);
-  user.posts.splice(postIndex, 1);
-  localStorage.setItem("users", JSON.stringify(users));
+function deletePost(postToDelete) {
+  currentUser.posts = currentUser.posts.filter((post) => post !== postToDelete);
+  localStorage.setItem(currentUser.username, JSON.stringify(currentUser.posts)); // Update localStorage
   displayFeed();
 }
 
-// Zoom image on click
-function zoomImage(imgElement) {
-  imgElement.classList.toggle("zoomed");
-}
+// Show existing users to follow
+function showUsersToFollow() {
+  const usersToFollow = document.getElementById("usersToFollow");
+  usersToFollow.innerHTML = "";
 
-// Like a post
-function likePost(username, postIndex) {
-  const user = users.find((user) => user.username === username);
-  user.posts[postIndex].likes++;
-  localStorage.setItem("users", JSON.stringify(users));
-  displayFeed();
-}
+  existingUsers.forEach((user) => {
+    if (user.username !== currentUser.username) {
+      // Exclude the current user
+      const userElement = document.createElement("div");
+      userElement.classList.add("user");
 
-// Comment on a post
-function commentPost(username, postIndex) {
-  const comment = prompt("Enter your comment:");
-  if (comment) {
-    const user = users.find((user) => user.username === username);
-    user.posts[postIndex].comments.push(`${currentUser}: ${comment}`);
-    localStorage.setItem("users", JSON.stringify(users));
-    displayFeed();
-  }
-}
+      const userName = document.createElement("p");
+      userName.innerText = user.username;
 
-// Display users to follow
-function displayUsers() {
-  let usersHtml = "";
-  const loggedInUser = users.find((user) => user.username === currentUser);
-
-  users.forEach((user) => {
-    if (user.username !== currentUser) {
-      usersHtml += `
-                <div class="user">
-                    <p>${user.username}</p>
-                    <button onclick="${
-                      loggedInUser.following.includes(user.username)
-                        ? `unfollowUser('${user.username}')`
-                        : `followUser('${user.username}')`
-                    }">${
-        loggedInUser.following.includes(user.username) ? "Unfollow" : "Follow"
-      }</button>
-                </div>
-            `;
-    }
-  });
-  document.getElementById("usersToFollow").innerHTML = usersHtml;
-}
-
-// Follow a user
-function followUser(username) {
-  const userToFollow = users.find((user) => user.username === username);
-  const loggedInUser = users.find((user) => user.username === currentUser);
-
-  if (!loggedInUser.following.includes(username)) {
-    loggedInUser.following.push(username);
-    userToFollow.followers.push(currentUser);
-
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert(`You are now following ${username}`);
-    updateProfileInfo();
-    displayFollowersPosts();
-  } else {
-    alert("You are already following this user.");
-  }
-}
-
-// Unfollow a user
-function unfollowUser(username) {
-  const loggedInUser = users.find((user) => user.username === currentUser);
-  const userToUnfollow = users.find((user) => user.username === username);
-
-  if (loggedInUser.following.includes(username)) {
-    loggedInUser.following = loggedInUser.following.filter(
-      (user) => user !== username
-    );
-    userToUnfollow.followers = userToUnfollow.followers.filter(
-      (user) => user !== currentUser
-    );
-
-    localStorage.setItem("users", JSON.stringify(users));
-
-    alert(`You have unfollowed ${username}`);
-    updateProfileInfo();
-    displayFollowersPosts();
-  } else {
-    alert("You are not following this user.");
-  }
-}
-
-function displayFollowersPosts() {
-  const loggedInUser = users.find((user) => user.username === currentUser);
-  let followersPostsHtml = "";
-
-  // Clear existing content before adding new posts
-  document.getElementById("followersPosts").innerHTML = "";
-
-  loggedInUser.following.forEach((followingUsername) => {
-    const followingUser = users.find(
-      (user) => user.username === followingUsername
-    );
-
-    if (followingUser) {
-      followingUser.posts.forEach((post) => {
-        followersPostsHtml += `
-            <div class="post">
-                <p><strong>${followingUsername}</strong>: ${post.content}</p>
-                ${
-                  post.file
-                    ? `<img src="${post.file}" class="zoomable" onclick="zoomImage(this)">`
-                    : ""
-                }
-                <div class="actions">
-                    <button onclick="likePost('${followingUsername}', ${followingUser.posts.indexOf(
-          post
-        )})">Like (${post.likes})</button>
-                    <button onclick="commentPost('${followingUsername}', ${followingUser.posts.indexOf(
-          post
-        )})">Comment</button>
-                </div>
-                <div class="comments">
-                    ${post.comments
-                      .map((comment) => `<p class="comment">${comment}</p>`)
-                      .join("")}
-                </div>
-            </div>
-        `;
+      const followBtn = document.createElement("button");
+      followBtn.innerText = "Follow";
+      followBtn.addEventListener("click", () => {
+        currentUser.following.push(user);
+        updateProfileInfo();
+        displayFeed(); // Update feed with followed users' posts
       });
+
+      userElement.appendChild(userName);
+      userElement.appendChild(followBtn);
+      usersToFollow.appendChild(userElement);
     }
   });
-
-  document.getElementById("followersPosts").innerHTML = followersPostsHtml;
-}
-
-// Update profile info
-function updateProfileInfo() {
-  const loggedInUser = users.find((user) => user.username === currentUser);
-  document.getElementById(
-    "followersCount"
-  ).innerText = `Followers: ${loggedInUser.followers.length}`;
-  document.getElementById(
-    "followingCount"
-  ).innerText = `Following: ${loggedInUser.following.length}`;
 }
