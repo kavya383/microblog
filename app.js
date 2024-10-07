@@ -48,17 +48,15 @@ const existingUsers = [
 document.getElementById("registerBtn").addEventListener("click", function () {
   const username = document.getElementById("username").value.trim();
   if (username) {
-    const storedPosts = existingUsers.find((user) => user.username === username)?.posts || [];
-
     currentUser = {
       username: username,
       followers: [],
       following: [],
-      posts: storedPosts,
+      posts: [], // Initially no posts
     };
 
     users.push(currentUser);
-    assignFollowers();
+    assignFollowers(); // Assign existing followers to the current user
     showAppSection();
   } else {
     alert("Please enter a username.");
@@ -69,7 +67,7 @@ document.getElementById("registerBtn").addEventListener("click", function () {
 function assignFollowers() {
   existingUsers.forEach((user) => {
     if (currentUser.username !== user.username) {
-      user.followers.push(currentUser);
+      user.followers.push(currentUser); // Add current user to each existing user's followers
     }
   });
 }
@@ -81,7 +79,7 @@ function showAppSection() {
   document.getElementById("welcomeMessage").innerText = `Welcome, ${currentUser.username}!`;
   updateProfileInfo();
   displayFeed();
-  showUsersToFollow();
+  showUsersToFollow(); // Show existing users to follow
 }
 
 // Update profile info like followers and following
@@ -131,7 +129,7 @@ function displayFeed() {
 
   // Display current user's posts
   currentUser.posts.forEach((post) => {
-    const postElement = createPostElement(post, true);
+    const postElement = createPostElement(post, true, currentUser.username); // Pass the current user's username
     feed.appendChild(postElement);
   });
 
@@ -149,31 +147,25 @@ function createPostElement(post, isUserPost, username) {
   const postElement = document.createElement("div");
   postElement.classList.add("post");
 
+  const usernameElement = document.createElement("p");
+  usernameElement.innerText = `Posted by: ${username}`; // Display username
+  usernameElement.style.fontWeight = "bold"; // Make the username bold
+  postElement.appendChild(usernameElement); // Append the username to the post element
+
   const postContent = document.createElement("p");
   postContent.innerText = post.content;
+  postElement.appendChild(postContent);
 
-  const postImage = document.createElement("img");
   if (post.imageUrl) {
+    const postImage = document.createElement("img");
     postImage.src = post.imageUrl;
     postImage.classList.add("zoomable");
+    postElement.appendChild(postImage);
   }
 
   const postTimestamp = document.createElement("p");
   postTimestamp.innerText = `Posted on: ${post.timestamp}`;
-
-  postElement.appendChild(postContent);
-  if (post.imageUrl) postElement.appendChild(postImage);
   postElement.appendChild(postTimestamp);
-
-  // Display comments
-  const commentsList = document.createElement("div");
-  commentsList.classList.add("comments-list");
-  post.comments.forEach((comment) => {
-    const commentElement = document.createElement("p");
-    commentElement.innerText = comment; // Display comment text
-    commentsList.appendChild(commentElement);
-  });
-  postElement.appendChild(commentsList);
 
   // Like button
   const likeBtn = document.createElement("button");
@@ -192,11 +184,21 @@ function createPostElement(post, isUserPost, username) {
   commentBtn.addEventListener("click", () => {
     const commentContent = prompt("Enter your comment:");
     if (commentContent) {
-      post.comments.push(`${currentUser.username}: ${commentContent}`); // Include username with comment
+      post.comments.push({ username, content: commentContent }); // Store comment with username
       displayFeed(); // Update feed to show new comments
     }
   });
   postElement.appendChild(commentBtn);
+
+  // Show comments
+  const commentsElement = document.createElement("div");
+  commentsElement.classList.add("comments");
+  post.comments.forEach((comment) => {
+    const commentElement = document.createElement("p");
+    commentElement.innerText = `${comment.username}: ${comment.content}`; // Display comment with username
+    commentsElement.appendChild(commentElement);
+  });
+  postElement.appendChild(commentsElement);
 
   // Add delete button only for user's posts
   if (isUserPost) {
@@ -207,14 +209,6 @@ function createPostElement(post, isUserPost, username) {
       deletePost(post);
     });
     postElement.appendChild(deleteBtn);
-  }
-
-  // Display the follower's username if it's a follower's post
-  if (!isUserPost) {
-    const usernameElement = document.createElement("p");
-    usernameElement.innerText = `Posted by: ${username}`; // Display follower's username
-    usernameElement.style.fontWeight = "bold"; // Optional styling
-    postElement.prepend(usernameElement); // Add username at the top of the post
   }
 
   return postElement;
@@ -233,6 +227,7 @@ function showUsersToFollow() {
 
   existingUsers.forEach((user) => {
     if (user.username !== currentUser.username) {
+      // Exclude the current user
       const userElement = document.createElement("div");
       userElement.classList.add("user");
 
@@ -244,7 +239,7 @@ function showUsersToFollow() {
       followBtn.addEventListener("click", () => {
         currentUser.following.push(user);
         updateProfileInfo();
-        displayFeed();
+        displayFeed(); // Update feed with followed users' posts
       });
 
       userElement.appendChild(userName);
