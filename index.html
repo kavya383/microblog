@@ -3,11 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Microblog - Posts</title>
+    <title>Microblog - Registration</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
+    <!-- Registration Section -->
+    <div class="container registration-container" id="registrationPage">
+      <h2>Register</h2>
+      <input type="text" id="username" placeholder="Enter your username" />
+      <button id="registerBtn">Register</button>
+    </div>
+
+    <!-- Main App Section -->
+    <div class="container" id="appSection" style="display: none">
       <h2 id="welcomeMessage"></h2>
 
       <div class="profile-info">
