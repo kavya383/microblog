@@ -48,19 +48,17 @@ const existingUsers = [
 document.getElementById("registerBtn").addEventListener("click", function () {
   const username = document.getElementById("username").value.trim();
   if (username) {
-    // Store previous posts before creating a new user
-    const storedPosts = existingUsers
-      .find((user) => user.username === username)?.posts || [];
+    const storedPosts = existingUsers.find((user) => user.username === username)?.posts || [];
 
     currentUser = {
       username: username,
       followers: [],
       following: [],
-      posts: storedPosts, // Load previous posts
+      posts: storedPosts,
     };
 
     users.push(currentUser);
-    assignFollowers(); // Assign existing followers to the current user
+    assignFollowers();
     showAppSection();
   } else {
     alert("Please enter a username.");
@@ -71,7 +69,7 @@ document.getElementById("registerBtn").addEventListener("click", function () {
 function assignFollowers() {
   existingUsers.forEach((user) => {
     if (currentUser.username !== user.username) {
-      user.followers.push(currentUser); // Add current user to each existing user's followers
+      user.followers.push(currentUser);
     }
   });
 }
@@ -80,22 +78,16 @@ function assignFollowers() {
 function showAppSection() {
   document.getElementById("registrationPage").style.display = "none";
   document.getElementById("appSection").style.display = "block";
-  document.getElementById(
-    "welcomeMessage"
-  ).innerText = `Welcome, ${currentUser.username}!`;
+  document.getElementById("welcomeMessage").innerText = `Welcome, ${currentUser.username}!`;
   updateProfileInfo();
   displayFeed();
-  showUsersToFollow(); // Show existing users to follow
+  showUsersToFollow();
 }
 
 // Update profile info like followers and following
 function updateProfileInfo() {
-  document.getElementById(
-    "followersCount"
-  ).innerText = `Followers: ${currentUser.followers.length}`;
-  document.getElementById(
-    "followingCount"
-  ).innerText = `Following: ${currentUser.following.length}`;
+  document.getElementById("followersCount").innerText = `Followers: ${currentUser.followers.length}`;
+  document.getElementById("followingCount").innerText = `Following: ${currentUser.following.length}`;
 }
 
 // Create a new post
@@ -139,14 +131,14 @@ function displayFeed() {
 
   // Display current user's posts
   currentUser.posts.forEach((post) => {
-    const postElement = createPostElement(post, true); // User's post
+    const postElement = createPostElement(post, true);
     feed.appendChild(postElement);
   });
 
   // Display followed users' posts
   currentUser.following.forEach((follower) => {
     follower.posts.forEach((post) => {
-      const postElement = createPostElement(post, false); // Followers' post
+      const postElement = createPostElement(post, false);
       followersPosts.appendChild(postElement);
     });
   });
@@ -175,6 +167,7 @@ function createPostElement(post, isUserPost) {
 
   // Display comments
   const commentsList = document.createElement("div");
+  commentsList.classList.add("comments-list");
   post.comments.forEach((comment) => {
     const commentElement = document.createElement("p");
     commentElement.innerText = comment; // Display comment text
@@ -232,7 +225,6 @@ function showUsersToFollow() {
 
   existingUsers.forEach((user) => {
     if (user.username !== currentUser.username) {
-      // Exclude the current user
       const userElement = document.createElement("div");
       userElement.classList.add("user");
 
@@ -244,7 +236,7 @@ function showUsersToFollow() {
       followBtn.addEventListener("click", () => {
         currentUser.following.push(user);
         updateProfileInfo();
-        displayFeed(); // Update feed with followed users' posts
+        displayFeed();
       });
 
       userElement.appendChild(userName);
