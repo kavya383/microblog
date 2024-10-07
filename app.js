@@ -138,14 +138,14 @@ function displayFeed() {
   // Display followed users' posts
   currentUser.following.forEach((follower) => {
     follower.posts.forEach((post) => {
-      const postElement = createPostElement(post, false);
+      const postElement = createPostElement(post, false, follower.username); // Pass the follower's username
       followersPosts.appendChild(postElement);
     });
   });
 }
 
 // Create post element for feed
-function createPostElement(post, isUserPost) {
+function createPostElement(post, isUserPost, username) {
   const postElement = document.createElement("div");
   postElement.classList.add("post");
 
@@ -207,6 +207,14 @@ function createPostElement(post, isUserPost) {
       deletePost(post);
     });
     postElement.appendChild(deleteBtn);
+  }
+
+  // Display the follower's username if it's a follower's post
+  if (!isUserPost) {
+    const usernameElement = document.createElement("p");
+    usernameElement.innerText = `Posted by: ${username}`; // Display follower's username
+    usernameElement.style.fontWeight = "bold"; // Optional styling
+    postElement.prepend(usernameElement); // Add username at the top of the post
   }
 
   return postElement;
