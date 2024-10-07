@@ -31,6 +31,69 @@ body {
   transform: translateY(-10px);
 }
 
+/* Registration Page */
+.registration-container {
+  max-width: 400px;
+  padding: 40px;
+  background-color: #fff;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  animation: slideDown 0.5s ease-in-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.registration-container h2 {
+  font-size: 2.4em;
+  font-weight: 700;
+  color: #ff6f61;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.registration-container input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 2px solid #ff6f61;
+  font-size: 1.2em;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.registration-container input:focus {
+  border-color: #ff9a9e;
+  box-shadow: 0 0 10px rgba(255, 111, 97, 0.2);
+}
+
+.registration-container button {
+  width: 100%;
+  background-color: #ff6f61;
+  color: #fff;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1.2em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.registration-container button:hover {
+  background-color: #ff9a9e;
+  transform: translateY(-5px);
+}
+
 /* Welcome Message */
 #welcomeMessage {
   font-size: 2.2em;
@@ -182,6 +245,70 @@ body {
 .zoomable:hover {
   transform: scale(1.1);
 }
+/* Button styles */
+button {
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin: 5px 0;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+/* Like button */
+button.like-btn {
+  background-color: #4caf50; /* Green */
+  color: white;
+}
+
+/* Comment button */
+button.comment-btn {
+  background-color: #add8e6; /* Light Blue */
+  color: black; /* Optional: change text color to black for better contrast */
+}
+
+/* Delete button */
+button.delete-btn {
+  background-color: #f44336; /* Red */
+  color: white;
+}
+
+/* Button hover effects */
+button:hover {
+  transform: translateY(-2px);
+}
+
+/* Like button hover effect */
+button.like-btn:hover {
+  background-color: #45a049; /* Darker green */
+}
+
+/* Comment button hover effect */
+button.comment-btn:hover {
+  background-color: #9bc4e2; /* Darker light blue */
+}
+
+/* Delete button hover effect */
+button.delete-btn:hover {
+  background-color: #d32f2f; /* Darker red */
+}
+
+/* Additional styles for inputs */
+input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: calc(100% - 22px);
+  margin: 5px 0;
+}
+
+/* Comments container */
+.comments-container {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #555;
+}
 
 /* Actions (like, comment, delete) */
 .actions {
@@ -283,6 +410,9 @@ body {
   .post-section textarea {
     min-height: 120px;
   }
+}
+.hidden {
+  display: none;
 }
 
 /* Alerts and Notifications */
