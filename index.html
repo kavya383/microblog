@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Microblog - Registration</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Registration Section -->
+    <div class="container registration-container" id="registrationPage">
+      <h2>Register</h2>
+      <input type="text" id="username" placeholder="Enter your username" />
+      <button id="registerBtn">Register</button>
+    </div>
+
+    <!-- Main App Section -->
+    <div class="container" id="appSection" style="display: none">
+      <h2 id="welcomeMessage"></h2>
+
+      <div class="profile-info">
+        <h3>Your Profile</h3>
+        <p id="followersCount">Followers: 0</p>
+        <p id="followingCount">Following: 0</p>
+      </div>
+
+      <div class="post-section">
+        <h3>Create a Post</h3>
+        <textarea
+          id="postContent"
+          placeholder="What's on your mind?"
+        ></textarea>
+        <input type="file" id="fileUpload" />
+        <button id="postBtn">Post</button>
+      </div>
+
+      <div class="feed-section">
+        <h3>Your Feed</h3>
+        <div id="feed"></div>
+      </div>
+
+      <div class="followers-section">
+        <h3>Follow Users</h3>
+        <div id="usersToFollow"></div>
+      </div>
+
+      <div class="followers-posts-section">
+        <h3>Followers' Posts</h3>
+        <div id="followersPosts"></div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
