@@ -49,7 +49,8 @@ document.getElementById("registerBtn").addEventListener("click", function () {
   const username = document.getElementById("username").value.trim();
   if (username) {
     // Store previous posts before creating a new user
-    const storedPosts = JSON.parse(localStorage.getItem(username)) || [];
+    const storedPosts = existingUsers
+      .find((user) => user.username === username)?.posts || [];
 
     currentUser = {
       username: username,
@@ -59,7 +60,6 @@ document.getElementById("registerBtn").addEventListener("click", function () {
     };
 
     users.push(currentUser);
-    localStorage.setItem("users", JSON.stringify(users));
     assignFollowers(); // Assign existing followers to the current user
     showAppSection();
   } else {
@@ -114,11 +114,10 @@ document.getElementById("postBtn").addEventListener("click", function () {
     imageUrl: file ? URL.createObjectURL(file) : null,
     timestamp: new Date().toLocaleString(),
     likes: 0,
-    comments: [], // Comments will be an array of objects
+    comments: [],
   };
 
   currentUser.posts.push(post);
-  localStorage.setItem(currentUser.username, JSON.stringify(currentUser.posts)); // Save posts to localStorage
   displayFeed();
   resetPostForm();
 });
@@ -147,19 +146,19 @@ function displayFeed() {
   // Display followed users' posts
   currentUser.following.forEach((follower) => {
     follower.posts.forEach((post) => {
-      const postElement = createPostElement(post, false, follower.username); // Followers' post
+      const postElement = createPostElement(post, false); // Followers' post
       followersPosts.appendChild(postElement);
     });
   });
 }
 
 // Create post element for feed
-function createPostElement(post, isUserPost, username = currentUser.username) {
+function createPostElement(post, isUserPost) {
   const postElement = document.createElement("div");
   postElement.classList.add("post");
 
   const postContent = document.createElement("p");
-  postContent.innerText = `${username}: ${post.content}`; // Include username with content
+  postContent.innerText = post.content;
 
   const postImage = document.createElement("img");
   if (post.imageUrl) {
@@ -180,10 +179,6 @@ function createPostElement(post, isUserPost, username = currentUser.username) {
   likeBtn.classList.add("like-btn");
   likeBtn.addEventListener("click", () => {
     post.likes++;
-    localStorage.setItem(
-      currentUser.username,
-      JSON.stringify(currentUser.posts)
-    ); // Update localStorage
     displayFeed(); // Update feed to show new like count
   });
   postElement.appendChild(likeBtn);
@@ -195,33 +190,11 @@ function createPostElement(post, isUserPost, username = currentUser.username) {
   commentBtn.addEventListener("click", () => {
     const commentContent = prompt("Enter your comment:");
     if (commentContent) {
-      post.comments.push({
-        username: currentUser.username,
-        text: commentContent,
-      }); // Store comment with username
-      localStorage.setItem(
-        currentUser.username,
-        JSON.stringify(currentUser.posts)
-      ); // Update localStorage
+      post.comments.push(`${currentUser.username}: ${commentContent}`);
       displayFeed(); // Update feed to show new comments
     }
   });
   postElement.appendChild(commentBtn);
-
-  // Comments display
-  const commentsContainer = document.createElement("div");
-  commentsContainer.classList.add("comments-container");
-  const commentsCount = document.createElement("p");
-  commentsCount.innerText = `Comments (${post.comments.length})`;
-  commentsContainer.appendChild(commentsCount);
-
-  post.comments.forEach((comment) => {
-    const commentElement = document.createElement("p");
-    commentElement.innerText = `${comment.username}: ${comment.text}`; // Include username with comment
-    commentsContainer.appendChild(commentElement);
-  });
-
-  postElement.appendChild(commentsContainer);
 
   // Add delete button only for user's posts
   if (isUserPost) {
@@ -240,7 +213,6 @@ function createPostElement(post, isUserPost, username = currentUser.username) {
 // Delete a post
 function deletePost(postToDelete) {
   currentUser.posts = currentUser.posts.filter((post) => post !== postToDelete);
-  localStorage.setItem(currentUser.username, JSON.stringify(currentUser.posts)); // Update localStorage
   displayFeed();
 }
 
