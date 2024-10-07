@@ -173,6 +173,15 @@ function createPostElement(post, isUserPost) {
   if (post.imageUrl) postElement.appendChild(postImage);
   postElement.appendChild(postTimestamp);
 
+  // Display comments
+  const commentsList = document.createElement("div");
+  post.comments.forEach((comment) => {
+    const commentElement = document.createElement("p");
+    commentElement.innerText = comment; // Display comment text
+    commentsList.appendChild(commentElement);
+  });
+  postElement.appendChild(commentsList);
+
   // Like button
   const likeBtn = document.createElement("button");
   likeBtn.innerText = `Like (${post.likes})`;
@@ -190,7 +199,7 @@ function createPostElement(post, isUserPost) {
   commentBtn.addEventListener("click", () => {
     const commentContent = prompt("Enter your comment:");
     if (commentContent) {
-      post.comments.push(`${currentUser.username}: ${commentContent}`);
+      post.comments.push(`${currentUser.username}: ${commentContent}`); // Include username with comment
       displayFeed(); // Update feed to show new comments
     }
   });
