@@ -1,7 +1,7 @@
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(135deg, #7F7FD5, #91EAE4); /* Soft purple to light turquoise gradient */
-    color: #333333; /* Dark gray text for better readability */
+    background: linear-gradient(135deg, #e91e63, #00bcd4); /* Magenta to light blue gradient */
+    color: #ffffff; /* White text for readability */
     margin: 0;
     padding: 0;
     min-height: 100vh;
@@ -52,7 +52,7 @@ h1, h2, h3, h4 {
 #user-id {
     font-weight: bold;
     font-size: 1.125rem; /* 18px */
-    color: #7F7FD5; /* Soft purple for user ID */
+    color: #e91e63; /* Magenta color for user ID */
 }
 
 input[type="text"], input[type="password"], textarea {
@@ -66,13 +66,13 @@ input[type="text"], input[type="password"], textarea {
 }
 
 input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
-    border-color: #91EAE4; /* Light turquoise border on focus */
+    border-color: #00bcd4; /* Light blue border on focus */
     background-color: #f9f3f4; /* Light background on focus */
     outline: none;
 }
 
 button {
-    background: linear-gradient(45deg, #7F7FD5, #91EAE4); /* Gradient for button */
+    background: linear-gradient(45deg, #e91e63, #00bcd4); /* Gradient for button */
     border: none;
     color: white;
     padding: 12px 20px;
@@ -85,12 +85,12 @@ button {
 }
 
 button:hover {
-    background: linear-gradient(45deg, #6B6BDA, #82D1D3); /* Darker gradient on hover */
+    background: linear-gradient(45deg, #d81b60, #00acc1); /* Darker gradient on hover */
     transform: scale(1.05); /* Slight grow effect */
 }
 
 button:focus {
-    outline: 2px solid #6B6BDA; /* Outline for focus */
+    outline: 2px solid #d81b60; /* Outline for focus */
 }
 
 button:disabled {
@@ -116,7 +116,7 @@ button:disabled {
 .post h4 {
     margin: 0;
     font-size: 1.25rem; /* Larger font size for post title */
-    color: #7F7FD5; /* Soft purple for post title */
+    color: #e91e63; /* Darker magenta for post title */
 }
 
 .comments {
@@ -129,7 +129,7 @@ button:disabled {
 }
 
 .comment strong {
-    color: #91EAE4; /* Light turquoise for comment usernames */
+    color: #00bcd4; /* Light blue for comment usernames */
 }
 
 #follow-users-list {
