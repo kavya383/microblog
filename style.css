@@ -1,143 +1,150 @@
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f8fa; /* Light background color similar to Twitter */
-    color: #14171a; /* Darker text color */
-    margin: 0;
-    padding: 0;
+  font-family: "Arial", sans-serif;
+  background-color: #f5f8fa; /* Light background color similar to Twitter */
+  color: #14171a; /* Darker text color */
+  margin: 0;
+  padding: 0;
 }
 
-h1, h2, h3, h4 {
-    color: #1da1f2; /* Twitter's brand color for headings */
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+h1,
+h2,
+h3,
+h4 {
+  color: #1da1f2; /* Twitter's brand color for headings */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .page {
-    display: none;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    background-color: #ffffff; /* White background for pages */
-    margin: 20px auto;
-    max-width: 600px;
-    transition: box-shadow 0.3s;
+  display: none;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #ffffff; /* White background for pages */
+  margin: 20px auto;
+  max-width: 600px;
+  transition: box-shadow 0.3s;
 }
 
 .page:hover {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
 }
 
 #alert-box {
-    display: none;
-    padding: 10px;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    color: white;
-    text-align: center;
-    font-weight: bold;
+  display: none;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  color: white;
+  text-align: center;
+  font-weight: bold;
 }
 
 .alert.success {
-    background-color: #28a745; /* Green for success messages */
+  background-color: #28a745; /* Green for success messages */
 }
 
 .alert.error {
-    background-color: #dc3545; /* Red for error messages */
+  background-color: #dc3545; /* Red for error messages */
 }
 
 #user-id {
-    font-weight: bold;
-    font-size: 1.125rem; /* 18px */
-    color: #14171a; /* Dark text color */
+  font-weight: bold;
+  font-size: 1.125rem; /* 18px */
+  color: #14171a; /* Dark text color */
 }
 
-input[type="text"], input[type="password"], textarea {
-    width: 100%;
-    padding: 10px; /* Increased padding for comfort */
-    border: 1px solid #ccc; /* Light gray border */
-    border-radius: 5px;
-    margin-bottom: 10px;
-    font-size: 1rem; /* 16px */
-    transition: border-color 0.3s;
+input[type="text"],
+input[type="password"],
+textarea {
+  width: 100%;
+  padding: 10px; /* Increased padding for comfort */
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-size: 1rem; /* 16px */
+  transition: border-color 0.3s;
 }
 
-input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
-    border-color: #1da1f2; /* Change border color on focus */
-    outline: none; /* Remove default outline */
+input[type="text"]:focus,
+input[type="password"]:focus,
+textarea:focus {
+  border-color: #1da1f2; /* Change border color on focus */
+  outline: none; /* Remove default outline */
 }
 
 button {
-    background-color: #1da1f2; /* Twitter blue */
-    border: none;
-    color: white;
-    padding: 10px 15px; /* Increased padding for buttons */
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 1rem; /* 16px */
-    margin: 5px 2px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s; /* Animation on hover */
+  background-color: #1da1f2; /* Twitter blue */
+  border: none;
+  color: white;
+  padding: 10px 15px; /* Increased padding for buttons */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 1rem; /* 16px */
+  margin: 5px 2px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s; /* Animation on hover */
 }
 
 button:hover {
-    background-color: #0d95e8; /* Darker shade on hover */
-    transform: scale(1.05); /* Slight scale effect */
+  background-color: #0d95e8; /* Darker shade on hover */
+  transform: scale(1.05); /* Slight scale effect */
 }
 
 button:focus {
-    outline: 2px solid #0d95e8; /* Focus outline */
+  outline: 2px solid #0d95e8; /* Focus outline */
 }
 
 button:disabled {
-    background-color: #ccc; /* Grey out disabled buttons */
-    cursor: not-allowed; /* Change cursor for disabled */
+  background-color: #ccc; /* Grey out disabled buttons */
+  cursor: not-allowed; /* Change cursor for disabled */
 }
 
 .post {
-    border: 1px solid #e1e8ed; /* Light border color */
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-    background-color: #ffffff; /* White background for posts */
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
-    transition: transform 0.2s; /* Transition for posts */
+  border: 1px solid #e1e8ed; /* Light border color */
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #ffffff; /* White background for posts */
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.2s; /* Transition for posts */
 }
 
 .post:hover {
-    transform: translateY(-2px); /* Slight lift effect on hover */
+  transform: translateY(-2px); /* Slight lift effect on hover */
 }
 
 .post h4 {
-    margin: 0;
-    font-size: 1.125rem; /* 18px */
-    color: #14171a; /* Dark text color */
+  margin: 0;
+  font-size: 1.125rem; /* 18px */
+  color: #14171a; /* Dark text color */
 }
 
 .comments {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .comment {
-    border-top: 1px solid #e1e8ed; /* Light border for comments */
-    padding: 5px 0;
+  border-top: 1px solid #e1e8ed; /* Light border for comments */
+  padding: 5px 0;
 }
 
 .comment strong {
-    color: #1da1f2; /* Color for comment username */
+  color: #1da1f2; /* Color for comment username */
 }
 
 #follow-users-list {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 /* Responsive styles */
 @media (max-width: 600px) {
-    button {
-        width: 100%; /* Full width for buttons on small screens */
-    }
+  button {
+    width: 100%; /* Full width for buttons on small screens */
+  }
 
-    .page {
-        padding: 15px; /* Reduced padding for smaller screens */
-    }
+  .page {
+    padding: 15px; /* Reduced padding for smaller screens */
+  }
 }

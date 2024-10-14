@@ -1,41 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Microblogging Application</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div id="alert-box" class="alert"></div>
 
     <div id="login-page" class="page">
-        <h1>Login / Signup</h1>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button onclick="signup()">Login / Signup</button>
+      <h1>Login / Signup</h1>
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button onclick="signup()">Login / Signup</button>
     </div>
 
-    <div id="home-page" class="page" style="display: none;">
-        <h2>Welcome, <span id="user-id"></span>!</h2>
-        <div id="user-stats">
-            <p>Followers: <span id="follower-count">0</span></p>
-            <p>Following: <span id="following-count">0</span></p>
-        </div>
-        <div id="post-creation">
-            <textarea id="post-text" placeholder="What's on your mind?"></textarea>
-            <input type="file" id="post-image">
-            <button onclick="createPost()">Create Post</button>
-        </div>
-        <div id="feed"></div>
-        <div id="follow-users-list"></div>
-        <div id="user-settings">
-            <h2>User Settings</h2>
-            <button onclick="deleteAccount()">Delete Account</button>
-        </div>
-        <button onclick="logout()">Logout</button>
+    <div id="home-page" class="page" style="display: none">
+      <h2>Welcome, <span id="user-id"></span>!</h2>
+      <div id="user-stats">
+        <p>Followers: <span id="follower-count">0</span></p>
+        <p>Following: <span id="following-count">0</span></p>
+      </div>
+      <div id="post-creation">
+        <textarea id="post-text" placeholder="What's on your mind?"></textarea>
+        <input type="file" id="post-image" />
+        <button onclick="createPost()">Create Post</button>
+      </div>
+      <div id="feed"></div>
+      <div id="follow-users-list"></div>
+      <div id="user-settings">
+        <h2>User Settings</h2>
+        <button onclick="deleteAccount()">Delete Account</button>
+      </div>
+      <button onclick="logout()">Logout</button>
     </div>
 
     <script src="app.js"></script>
-</body>
+  </body>
 </html>
