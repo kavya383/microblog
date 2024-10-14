@@ -1,0 +1,156 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #e91e63, #00bcd4); /* Magenta to light blue gradient */
+    color: #ffffff; /* White text for readability */
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1, h2, h3, h4 {
+    color: #ffffff; /* White text for headings */
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2); /* Soft shadow for better readability */
+}
+
+.page {
+    display: none;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15); /* More pronounced shadow for depth */
+    background-color: #ffffff; /* White background color for contrast */
+    margin: 20px auto;
+    max-width: 600px;
+    transition: box-shadow 0.3s, transform 0.3s; /* Smooth hover and transition */
+}
+
+.page:hover {
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.3); /* Increased shadow on hover */
+    transform: translateY(-5px); /* Lift effect on hover */
+}
+
+#alert-box {
+    display: none;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+}
+
+.alert.success {
+    background-color: #28a745; /* Green for success messages */
+}
+
+.alert.error {
+    background-color: #dc3545; /* Red for error messages */
+}
+
+#user-id {
+    font-weight: bold;
+    font-size: 1.125rem; /* 18px */
+    color: #e91e63; /* Magenta color for user ID */
+}
+
+input[type="text"], input[type="password"], textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0; /* Slightly darker border */
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    transition: border-color 0.3s, background-color 0.3s; /* Smooth transitions */
+}
+
+input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+    border-color: #00bcd4; /* Light blue border on focus */
+    background-color: #f9f3f4; /* Light background on focus */
+    outline: none;
+}
+
+button {
+    background: linear-gradient(45deg, #e91e63, #00bcd4); /* Gradient for button */
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    font-size: 1rem;
+    margin: 10px 2px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.4s, transform 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(45deg, #d81b60, #00acc1); /* Darker gradient on hover */
+    transform: scale(1.05); /* Slight grow effect */
+}
+
+button:focus {
+    outline: 2px solid #d81b60; /* Outline for focus */
+}
+
+button:disabled {
+    background-color: #b0b0b0; /* Grey out disabled buttons */
+    cursor: not-allowed;
+}
+
+.post {
+    border: 2px solid #e1e8ed;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 15px;
+    background-color: #ffffff; /* White background for posts */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.post:hover {
+    transform: translateY(-3px); /* Lift on hover */
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15); /* Bigger shadow on hover */
+}
+
+.post h4 {
+    margin: 0;
+    font-size: 1.25rem; /* Larger font size for post title */
+    color: #e91e63; /* Darker magenta for post title */
+}
+
+.comments {
+    margin-top: 10px;
+}
+
+.comment {
+    border-top: 1px solid #e1e8ed;
+    padding: 8px 0;
+}
+
+.comment strong {
+    color: #00bcd4; /* Light blue for comment usernames */
+}
+
+#follow-users-list {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.8); /* Slightly transparent background */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* Shadow for depth */
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    button {
+        width: 100%; /* Full width for buttons on small screens */
+    }
+
+    .page {
+        padding: 15px;
+    }
+
+    .post {
+        padding: 15px; /* Adjust post padding for smaller screens */
+    }
+}
