@@ -1,436 +1,143 @@
-/* Global Styles */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
-}
-
 body {
-  background: radial-gradient(circle, #ff9a9e 0%, #fad0c4 100%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-size: 16px;
-  color: #333;
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f8fa; /* Light background color similar to Twitter */
+    color: #14171a; /* Darker text color */
+    margin: 0;
+    padding: 0;
 }
 
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: auto;
-  background: linear-gradient(145deg, #ffe259, #ffa751);
-  border-radius: 20px;
-  padding: 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-  transition: all 0.4s ease;
+h1, h2, h3, h4 {
+    color: #1da1f2; /* Twitter's brand color for headings */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.container:hover {
-  transform: translateY(-10px);
+.page {
+    display: none;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff; /* White background for pages */
+    margin: 20px auto;
+    max-width: 600px;
+    transition: box-shadow 0.3s;
 }
 
-/* Registration Page */
-.registration-container {
-  max-width: 400px;
-  padding: 40px;
-  background-color: #fff;
-  text-align: center;
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  animation: slideDown 0.5s ease-in-out;
+.page:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Shadow effect on hover */
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+#alert-box {
+    display: none;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
 }
 
-.registration-container h2 {
-  font-size: 2.4em;
-  font-weight: 700;
-  color: #ff6f61;
-  margin-bottom: 30px;
-  letter-spacing: 1px;
+.alert.success {
+    background-color: #28a745; /* Green for success messages */
 }
 
-.registration-container input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  border: 2px solid #ff6f61;
-  font-size: 1.2em;
-  outline: none;
-  transition: border-color 0.3s ease;
+.alert.error {
+    background-color: #dc3545; /* Red for error messages */
 }
 
-.registration-container input:focus {
-  border-color: #ff9a9e;
-  box-shadow: 0 0 10px rgba(255, 111, 97, 0.2);
+#user-id {
+    font-weight: bold;
+    font-size: 1.125rem; /* 18px */
+    color: #14171a; /* Dark text color */
 }
 
-.registration-container button {
-  width: 100%;
-  background-color: #ff6f61;
-  color: #fff;
-  border: none;
-  padding: 12px;
-  border-radius: 8px;
-  font-size: 1.2em;
-  cursor: pointer;
-  transition: all 0.3s ease;
+input[type="text"], input[type="password"], textarea {
+    width: 100%;
+    padding: 10px; /* Increased padding for comfort */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1rem; /* 16px */
+    transition: border-color 0.3s;
 }
 
-.registration-container button:hover {
-  background-color: #ff9a9e;
-  transform: translateY(-5px);
+input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+    border-color: #1da1f2; /* Change border color on focus */
+    outline: none; /* Remove default outline */
 }
 
-/* Welcome Message */
-#welcomeMessage {
-  font-size: 2.2em;
-  font-weight: 700;
-  color: #ff6f61;
-  text-align: center;
-  margin-bottom: 30px;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  background: linear-gradient(90deg, #ff6f61, #ff9a9e);
-  -webkit-background-clip: text;
-  color: transparent;
+button {
+    background-color: #1da1f2; /* Twitter blue */
+    border: none;
+    color: white;
+    padding: 10px 15px; /* Increased padding for buttons */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1rem; /* 16px */
+    margin: 5px 2px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s; /* Animation on hover */
 }
 
-/* Profile Info */
-.profile-info {
-  background-color: #f0f7ff;
-  border-radius: 15px;
-  padding: 20px;
-  margin-bottom: 30px;
-  text-align: center;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+button:hover {
+    background-color: #0d95e8; /* Darker shade on hover */
+    transform: scale(1.05); /* Slight scale effect */
 }
 
-.profile-info h3 {
-  font-size: 1.6em;
-  color: #5e60ce;
-  margin-bottom: 10px;
+button:focus {
+    outline: 2px solid #0d95e8; /* Focus outline */
 }
 
-.profile-info p {
-  font-size: 1.2em;
-  color: #1e3799;
-}
-
-/* Post Section */
-.post-section {
-  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-  border-radius: 15px;
-  padding: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  animation: pulse 1s infinite;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  }
-  50% {
-    transform: scale(1.02);
-    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
-  }
-  100% {
-    transform: scale(1);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  }
-}
-
-.post-section h3 {
-  font-size: 1.6em;
-  color: #ff6f61;
-  margin-bottom: 15px;
-}
-
-.post-section textarea {
-  width: 100%;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 10px;
-  border: 2px solid #ff6f61;
-  font-size: 1.1em;
-  outline: none;
-  transition: border-color 0.3s ease;
-}
-
-.post-section textarea:focus {
-  border-color: #ff9a9e;
-  box-shadow: 0 0 10px rgba(255, 111, 97, 0.2);
-}
-
-.post-section button {
-  background-color: #ff6f61;
-  color: #fff;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 1.1em;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.post-section button:hover {
-  background-color: #ff9a9e;
-  transform: translateY(-5px);
-}
-
-/* Feed Section */
-.feed-section,
-.followers-posts-section {
-  margin-bottom: 30px;
-}
-
-.feed-section h3,
-.followers-posts-section h3 {
-  font-size: 1.6em;
-  color: #2b59c3;
-  margin-bottom: 15px;
-  position: relative;
-  display: inline-block;
-}
-
-.feed-section h3::after,
-.followers-posts-section h3::after {
-  content: "";
-  display: block;
-  height: 3px;
-  width: 60px;
-  background: linear-gradient(90deg, #6a11cb, #2575fc);
-  margin-top: 5px;
+button:disabled {
+    background-color: #ccc; /* Grey out disabled buttons */
+    cursor: not-allowed; /* Change cursor for disabled */
 }
 
 .post {
-  background-color: rgba(255, 241, 237, 0.95);
-  border-radius: 15px;
-  padding: 20px;
-  margin-bottom: 20px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease;
+    border: 1px solid #e1e8ed; /* Light border color */
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: #ffffff; /* White background for posts */
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: transform 0.2s; /* Transition for posts */
 }
 
 .post:hover {
-  transform: translateY(-5px);
+    transform: translateY(-2px); /* Slight lift effect on hover */
 }
 
-.post p {
-  margin-bottom: 15px;
-  font-size: 1.2em;
+.post h4 {
+    margin: 0;
+    font-size: 1.125rem; /* 18px */
+    color: #14171a; /* Dark text color */
 }
 
-.post img {
-  max-width: 100%;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: transform 0.2s ease-in-out;
-}
-
-.zoomable:hover {
-  transform: scale(1.1);
-}
-/* Button styles */
-button {
-  border: none;
-  border-radius: 5px;
-  padding: 10px 15px;
-  margin: 5px 0;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-/* Like button */
-button.like-btn {
-  background-color: #4caf50; /* Green */
-  color: white;
-}
-
-/* Comment button */
-button.comment-btn {
-  background-color: #add8e6; /* Light Blue */
-  color: black; /* Optional: change text color to black for better contrast */
-}
-
-/* Delete button */
-button.delete-btn {
-  background-color: #f44336; /* Red */
-  color: white;
-}
-
-/* Button hover effects */
-button:hover {
-  transform: translateY(-2px);
-}
-
-/* Like button hover effect */
-button.like-btn:hover {
-  background-color: #45a049; /* Darker green */
-}
-
-/* Comment button hover effect */
-button.comment-btn:hover {
-  background-color: #9bc4e2; /* Darker light blue */
-}
-
-/* Delete button hover effect */
-button.delete-btn:hover {
-  background-color: #d32f2f; /* Darker red */
-}
-
-/* Additional styles for inputs */
-input[type="text"] {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: calc(100% - 22px);
-  margin: 5px 0;
-}
-
-/* Comments container */
-.comments-container {
-  margin-top: 10px;
-  font-size: 12px;
-  color: #555;
-}
-
-/* Actions (like, comment, delete) */
-.actions {
-  display: flex;
-  gap: 15px;
-  margin-top: 15px;
-}
-
-.actions button {
-  background-color: #6a11cb;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.actions button:hover {
-  background-color: #2575fc;
-  transform: translateY(-3px);
-}
-
-/* Comments Section */
 .comments {
-  margin-top: 15px;
+    margin-top: 10px;
 }
 
 .comment {
-  font-size: 1em;
-  color: #333;
-  background-color: #fff0f5;
-  border-radius: 8px;
-  padding: 12px;
-  margin-top: 10px;
-  border-left: 5px solid #ff6f61;
+    border-top: 1px solid #e1e8ed; /* Light border for comments */
+    padding: 5px 0;
 }
 
-/* Followers Section */
-.followers-section,
-.followers-posts-section {
-  background-color: rgba(255, 250, 230, 0.95);
-  border-radius: 15px;
-  padding: 20px;
-  margin-bottom: 30px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+.comment strong {
+    color: #1da1f2; /* Color for comment username */
 }
 
-.followers-section h3,
-.followers-posts-section h3 {
-  color: #f093fb;
+#follow-users-list {
+    margin-top: 20px;
 }
 
-.user {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 0;
-  border-bottom: 1px solid #ddd;
-}
+/* Responsive styles */
+@media (max-width: 600px) {
+    button {
+        width: 100%; /* Full width for buttons on small screens */
+    }
 
-.user p {
-  margin: 0;
-  font-size: 1.2em;
-  color: #333;
-}
-
-.user button {
-  background-color: #6a11cb;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.user button:hover {
-  background-color: #2575fc;
-  transform: translateY(-3px);
-}
-
-/* Followers' Posts Section */
-.followers-posts-section .post {
-  background-color: rgba(245, 255, 250, 0.95);
-}
-
-/* Responsiveness */
-@media (max-width: 768px) {
-  .container {
-    padding: 20px;
-  }
-
-  .actions {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .post-section textarea {
-    min-height: 120px;
-  }
-}
-.hidden {
-  display: none;
-}
-
-/* Alerts and Notifications */
-.alert {
-  padding: 15px;
-  margin-bottom: 20px;
-  background-color: #fff3cd;
-  color: #856404;
-  border: 1px solid #ffeeba;
-  border-radius: 8px;
-  animation: fadeIn 0.5s;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+    .page {
+        padding: 15px; /* Reduced padding for smaller screens */
+    }
 }
