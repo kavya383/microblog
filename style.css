@@ -8,8 +8,6 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column; /* Stack elements vertically */
-    height: 100vh; /* Full height for vertical centering */
 }
 
 h1, h2, h3, h4 {
@@ -34,15 +32,15 @@ h1, h2, h3, h4 {
 }
 
 #alert-box {
-  display: none;
-  padding: 10px;
-  margin: 20px auto; /* Centers the alert box */
-  border-radius: 5px;
-  color: white;
-  text-align: center;
-  font-weight: bold;
-  max-width: 90%; /* Limit the width to make it responsive */
+    display: none;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    color: white;
+    text-align: center;
+    font-weight: bold;
 }
+
 
 .alert.success {
   background-color: #28a745; /* Green for success messages */
